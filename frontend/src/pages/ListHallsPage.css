@@ -1,0 +1,66 @@
+/* src/pages/ListHallsPage.css */
+
+.halls-page {
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9f9f9;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.filters input,
+.filters select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 160px;
+  font-size: 14px;
+}
+
+.hall-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.hall-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.hall-card:hover {
+  transform: translateY(-5px);
+}
+
+.hall-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.hall-info {
+  padding: 15px;
+}
+
+.hall-info h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.hall-info p {
+  margin: 4px 0;
+  color: #555;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}

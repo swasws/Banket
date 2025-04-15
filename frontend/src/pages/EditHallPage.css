@@ -1,0 +1,82 @@
+.edit-hall-container {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #f7f9fc;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.edit-hall-title {
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.edit-hall-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.edit-hall-form label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.edit-hall-form input,
+.edit-hall-form select,
+.edit-hall-form textarea {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+
+.edit-hall-form input:focus,
+.edit-hall-form select:focus,
+.edit-hall-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.edit-hall-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.edit-hall-image-preview {
+  max-width: 300px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.edit-hall-button {
+  padding: 14px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.edit-hall-button:hover {
+  background-color: #0056b3;
+}
+
+.edit-hall-error {
+  color: red;
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 15px;
+}

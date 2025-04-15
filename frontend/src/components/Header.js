@@ -1,72 +1,61 @@
 // src/components/Header.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Header.css';
 
 const Header = () => {
-  // Проверим, есть ли в localStorage токен
   const token = localStorage.getItem('authToken');
   const role = localStorage.getItem('userRole');
   const userName = localStorage.getItem('userName');
   const organizationName = localStorage.getItem('organizationName');
 
-  // Функция логаута: очистим localStorage
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('organizationName');
-    window.location.href = '/'; // после логаута на главную
+    localStorage.clear();
+    window.location.href = '/';
   };
 
   return (
-    <header style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
-      <nav>
-        {/* Общедоступные ссылки */}
-        <Link to="/">Главная</Link> | {' '}
+    <header className="main-header">
+      <div className="header-container">
+        <div className="logo">
+          <Link to="/">🏛 VenueFinder</Link>
+        </div>
 
-        {token ? (
-          // Если пользователь залогинен, показываем:
-          <>
-            {role === 'owner' && (
-              // Для владельца - имя заведения
-              <span style={{ marginRight: '10px' }}>
-                Здравствуйте, {organizationName || 'Владелец'}!
+        <nav className="nav-links">
+          {token ? (
+            <>
+              <span className="greeting">
+                {role === 'owner' && <>Здравствуйте, <strong>{organizationName || 'Владелец'}</strong>!</>}
+                {role === 'client' && <>Здравствуйте, <strong>{userName || 'Клиент'}</strong>!</>}
               </span>
-            )}
-            {role === 'client' && (
-              // Для клиента - username
-              <span style={{ marginRight: '10px' }}>
-                Здравствуйте, {userName || 'Клиент'}!
-              </span>
-            )}
 
-            {/* Допустим, ссылки для владельцев: */}
-            {role === 'owner' && (
-              <>
-                <Link to="/halls/add">Добавить зал</Link> | {' '}
-                <Link to="/halls">Список моих залов</Link> | {' '}
-              </>
-            )}
+              {role === 'owner' && (
+                <>
+                  <Link to="/halls/add">Добавить зал</Link>
+                  <Link to="/my-halls">Мои залы</Link>
+                  <Link to="/halls">Все залы</Link>
+                  <Link to="/owner/dashboard">Кабинет</Link>
+                </>
+              )}
 
-            {/* Ссылки для клиентов (пример) */}
-            {role === 'client' && (
-              <>
-                <Link to="/halls">Список залов</Link> | {' '}
-              </>
-            )}
+              {role === 'client' && (
+                <>
+                  <Link to="/halls">Список залов</Link>
+                  <Link to="/client/dashboard">Кабинет</Link>
+                </>
+              )}
 
-            {/* Кнопка логаута */}
-            <button onClick={handleLogout}>Выйти</button>
-          </>
-        ) : (
-          // Если не залогинен
-          <>
-            <Link to="/login">Логин</Link> | {' '}
-            <Link to="/owner/register">Регистрация Владельца</Link> | {' '}
-            <Link to="/client/register">Регистрация Клиента</Link>
-          </>
-        )}
-      </nav>
+              <button className="logout-button-red" onClick={handleLogout}>Выйти</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Логин</Link>
+              <Link to="/owner/register">Регистрация Владельца</Link>
+              <Link to="/client/register">Регистрация Клиента</Link>
+            </>
+          )}
+        </nav>
+      </div>
     </header>
   );
 };

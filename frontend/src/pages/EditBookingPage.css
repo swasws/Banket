@@ -1,0 +1,97 @@
+/* src/pages/EditBookingPage.css */
+.edit-booking-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 40px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.edit-booking-title {
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.edit-booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.edit-booking-form label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.edit-booking-form input,
+.edit-booking-form select,
+.edit-booking-form textarea {
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.edit-booking-form input:focus,
+.edit-booking-form textarea:focus,
+.edit-booking-form select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.edit-booking-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 12px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+
+.save-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
+}
+
+.cancel-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #b02a37;
+}
+
+.edit-booking-error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.edit-booking-success {
+  color: green;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}

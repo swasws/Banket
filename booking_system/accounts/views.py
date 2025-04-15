@@ -65,6 +65,7 @@ class OwnerLoginView(APIView):
         token, created = Token.objects.get_or_create(user=user)
 
         return Response({
+            "user_id": user.id,
             "token": token.key,
             "role": user.role,
             "organization_name": user.organization_name,

@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from 'react';
+// src/pages/EditHallPage.js
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './AddHallPage.css';
+import './EditHallPage.css';
 
-function AddHallPage() {
+function EditHallPage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -23,22 +28,50 @@ function AddHallPage() {
   const [imagePreview, setImagePreview] = useState(null);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    const fetchCities = async () => {
+    const fetchData = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('http://127.0.0.1:8000/api/cities/', {
-          headers: { Authorization: `Token ${token}` }
+
+        const [hallRes, cityRes] = await Promise.all([
+          axios.get(`http://127.0.0.1:8000/api/halls/${id}/`, {
+            headers: { Authorization: `Token ${token}` }
+          }),
+          axios.get('http://127.0.0.1:8000/api/cities/', {
+            headers: { Authorization: `Token ${token}` }
+          })
+        ]);
+
+        setCities(cityRes.data);
+        const data = hallRes.data;
+        setFormData({
+          name: data.name,
+          description: data.description,
+          tags: data.tags,
+          price: data.price,
+          capacity_min: data.capacity_min,
+          capacity_max: data.capacity_max,
+          address: data.address,
+          food_option: data.food_option,
+          alcohol_option: data.alcohol_option,
+          event_types: data.event_types,
+          service: data.service,
+          rules: data.rules,
+          city: data.city,
         });
-        setCities(response.data);
+
+        if (data.image) {
+          const img = data.image.startsWith('http') ? data.image : `http://127.0.0.1:8000${data.image}`;
+          setImagePreview(img);
+        }
       } catch (err) {
-        setError('Ошибка при загрузке списка городов.');
+        setError('Ошибка при загрузке данных зала.');
       }
     };
-    fetchCities();
-  }, []);
+
+    fetchData();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,12 +81,9 @@ function AddHallPage() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
-
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
+      reader.onloadend = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
     } else {
       setImagePreview(null);
@@ -62,16 +92,8 @@ function AddHallPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
-
     try {
       const token = localStorage.getItem('authToken');
-      if (!token) {
-        setError('Нет авторизации! Сначала войдите.');
-        return;
-      }
-
       const data = new FormData();
       for (const key in formData) {
         if (key === 'service') {
@@ -82,40 +104,24 @@ function AddHallPage() {
       }
       if (image) data.append('image', image);
 
-      await axios.post('http://127.0.0.1:8000/api/halls/', data, {
+      await axios.put(`http://127.0.0.1:8000/api/halls/${id}/`, data, {
         headers: {
           Authorization: `Token ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       });
 
-      setSuccess('Зал успешно добавлен!');
-      setFormData({
-        name: '',
-        description: '',
-        tags: '',
-        price: '',
-        capacity_min: '',
-        capacity_max: '',
-        address: '',
-        food_option: 'venue',
-        alcohol_option: 'allowed',
-        event_types: '',
-        service: false,
-        rules: '',
-        city: '',
-      });
-      setImage(null);
-      setImagePreview(null);
+      navigate('/owner/dashboard');
     } catch (err) {
-      setError('Ошибка при добавлении зала');
+      setError('Ошибка при обновлении зала.');
     }
   };
 
   return (
-    <div className="add-hall-container">
-      <h2>Добавить Зал</h2>
-      <form className="add-hall-form" onSubmit={handleSubmit}>
+    <div className="edit-hall-container">
+      <h2 className="edit-hall-title">Редактировать Зал</h2>
+      {error && <p className="edit-hall-error">{error}</p>}
+      <form onSubmit={handleSubmit} className="edit-hall-form">
         <label>Название:</label>
         <input name="name" value={formData.name} onChange={handleChange} required />
 
@@ -125,10 +131,7 @@ function AddHallPage() {
         <label>Изображение:</label>
         <input type="file" onChange={handleImageChange} />
         {imagePreview && (
-          <div className="preview-image-wrapper">
-            <p>Превью изображения:</p>
-            <img src={imagePreview} alt="preview" className="preview-image" />
-          </div>
+          <img src={imagePreview} alt="preview" className="edit-hall-image-preview" />
         )}
 
         <label>Теги:</label>
@@ -178,13 +181,10 @@ function AddHallPage() {
         <label>Правила:</label>
         <textarea name="rules" value={formData.rules} onChange={handleChange} />
 
-        <button type="submit">Добавить</button>
+        <button type="submit" className="edit-hall-button">Сохранить</button>
       </form>
-
-      {error && <p className="error-msg">{error}</p>}
-      {success && <p className="success-msg">{success}</p>}
     </div>
   );
 }
 
-export default AddHallPage;
+export default EditHallPage;
