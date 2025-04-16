@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Chat from './components/Chat';
 
 import HomePage from './pages/HomePage';
 
@@ -72,6 +73,8 @@ function App() {
         <Route path="/client/dashboard" element={<ClientDashboard />} />
         <Route path="/bookings/:id/edit" element={<EditBookingPage />} />
 
+        <Route path="/chat/:bookingId" element={<Chat />} />
+        <Route path="/chat" element={<Chat />} />
 
 
       </Routes>

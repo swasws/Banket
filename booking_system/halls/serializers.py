@@ -29,6 +29,8 @@ from .models import Booking
 class BookingSerializer(serializers.ModelSerializer):
     client = serializers.PrimaryKeyRelatedField(read_only=True)
     hall_name = serializers.CharField(source='hall.name', read_only=True)
+    date = serializers.DateField()
+    time = serializers.TimeField()
 
     class Meta:
         model = Booking
@@ -36,10 +38,23 @@ class BookingSerializer(serializers.ModelSerializer):
             'id', 'hall', 'hall_name', 'client',
             'event_name', 'date', 'time',
             'people_count', 'food_option',
-            'description', 'status', 'created_at'  # 👈 status обязательно
+            'description', 'status', 'created_at'
         ]
-        read_only_fields = ['client', 'created_at']
+        read_only_fields = ['client', 'created_at', 'status']
+
+
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ['id', 'message', 'is_read', 'created_at']
+
+
+from .models import Message
+
+class MessageSerializer(serializers.ModelSerializer):
+    sender_username = serializers.CharField(source='sender.username', read_only=True)
+
+    class Meta:
+        model = Message
+        fields = ['id', 'booking', 'sender', 'sender_username', 'text', 'timestamp']
+        read_only_fields = ['sender', 'timestamp']
