@@ -1,0 +1,147 @@
+.client-dashboard-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fefefe;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.client-dashboard-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.client-dashboard-section {
+  margin-bottom: 40px;
+}
+
+.client-dashboard-section h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 8px;
+  color: #007bff;
+}
+
+.client-dashboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.client-dashboard-list li {
+  background: #f8f9fb;
+  border-left: 4px solid #007bff;
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.client-dashboard-list strong {
+  font-weight: 600;
+  color: #222;
+}
+
+.client-dashboard-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.client-dashboard-link:hover {
+  text-decoration: underline;
+}
+
+.client-dashboard-status {
+  font-weight: bold;
+}
+
+.client-dashboard-status.approved {
+  color: #28a745;
+}
+
+.client-dashboard-status.rejected {
+  color: #dc3545;
+}
+
+.client-dashboard-status.pending {
+  color: #ffc107;
+}
+
+.client-dashboard-empty {
+  font-style: italic;
+  color: #777;
+}
+
+
+.client-dashboard-list-item {
+  background: #f8f9fb;
+  border-left: 4px solid #007bff;
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  font-size: 16px;
+}
+
+.client-dashboard-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.client-dashboard-subblock {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.event-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-link {
+  margin-top: 10px;
+  display: inline-block;
+  font-weight: 500;
+  color: #007bff;
+  border: 1px solid #007bff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #e6f1ff;
+  text-decoration: none;
+}
+
+.chat-link:hover {
+  background: #cbe3ff;
+}
+
+
+.btn-enable-pay {
+  background-color: #f39c12;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.pay-button {
+  background-color: #27ae60;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+}

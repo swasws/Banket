@@ -1,0 +1,209 @@
+/* Главная страница */
+.home-page {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafb;
+  color: #333;
+}
+
+/* 🔷 Приветственный экран */
+.hero-section {
+  background: linear-gradient(135deg, #146B3D, #149CD9, #00B2FF);
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+.hero-content p {
+  font-size: 1.5rem;
+}
+
+/* 🏙️ Блок с городами */
+.cities-section {
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+  position: relative;
+  text-align: center;
+}
+.cities-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #1c1e21;
+}
+
+/* 📦 Контейнер слайдера */
+.slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 60px;
+}
+
+/* 📤 Сам слайдер */
+.cities-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 30px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.cities-slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* 💡 Карточки городов */
+.city-card {
+  min-width: 260px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.city-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15);
+}
+.city-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.city-info {
+  padding: 18px 16px;
+}
+.city-info h3 {
+  font-size: 1.3rem;
+  margin: 0 0 10px;
+  color: #222;
+}
+.city-info p {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+/* ⬅️➡️ Кнопки */
+.slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 123, 255, 0.15);
+  color: #007bff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 5;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.slider-button:hover {
+  background: rgba(0, 123, 255, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+.slider-button.left {
+  left: 8px;
+}
+.slider-button.right {
+  right: 8px;
+}
+
+/* 📅 Блоки бронирования и регистрации зала */
+.book-hall-section,
+.register-hall-section {
+  padding: 60px 20px;
+  background: #ffffff;
+}
+/* Общая обёртка */
+.book-content,
+.register-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* Текст */
+.text-block {
+  flex: 1 1 45%;
+  min-width: 280px;
+}
+
+/* Фото */
+.image-block {
+  flex: 1 1 45%;
+  min-width: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-block img {
+  max-width: 100%;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.text-block h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.text-block p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.text-block ul {
+  margin-top: 15px;
+  padding-left: 20px;
+  list-style: none;
+}
+.text-block li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #444;
+  position: relative;
+  padding-left: 1.2em;
+}
+.text-block li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #149cd9;
+  font-weight: bold;
+}
+
+
+/* 📱 Адаптив */
+@media (max-width: 768px) {
+  .book-content,
+  .register-content {
+    flex-direction: column;
+  }
+
+  .slider-button.left,
+  .slider-button.right {
+    display: none;
+  }
+
+   .image-block img {
+    max-height: 280px;
+  }
+}
