@@ -26,11 +26,14 @@ class CitySerializer(serializers.ModelSerializer):
 
 from .models import Booking
 
+
 class BookingSerializer(serializers.ModelSerializer):
+    is_payment_enabled = serializers.BooleanField(read_only=True)
     client = serializers.PrimaryKeyRelatedField(read_only=True)
     hall_name = serializers.CharField(source='hall.name', read_only=True)
     date = serializers.DateField()
     time = serializers.TimeField()
+
 
     class Meta:
         model = Booking
@@ -38,9 +41,14 @@ class BookingSerializer(serializers.ModelSerializer):
             'id', 'hall', 'hall_name', 'client',
             'event_name', 'date', 'time',
             'people_count', 'food_option',
-            'description', 'status', 'created_at'
+            'description', 'status', 'created_at',
+            'is_payment_enabled', 'is_paid'
         ]
-        read_only_fields = ['client', 'created_at', 'status']
+        read_only_fields = ['client', 'created_at', 'status', 'is_paid']
+
+    def get_is_payment_enabled(self, obj):
+        # 👇 здесь твоя логика. Пример: включить оплату, если есть одобрение
+        return obj.status == 'approved'
 
 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -58,3 +66,16 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = ['id', 'booking', 'sender', 'sender_username', 'text', 'timestamp']
         read_only_fields = ['sender', 'timestamp']
+
+
+from rest_framework import serializers
+from .models import Comment
+
+class CommentSerializer(serializers.ModelSerializer):
+    user_username = serializers.CharField(source='user.username', read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'hall', 'user', 'user_username', 'text', 'created_at']
+        read_only_fields = ['id', 'user', 'hall', 'user_username', 'created_at']
+

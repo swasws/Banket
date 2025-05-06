@@ -87,6 +87,8 @@ class Booking(models.Model):
     people_count = models.PositiveIntegerField('Количество людей')
     food_option = models.CharField('Еда', max_length=10, choices=Hall.FOOD_CHOICES, default='venue')
     description = models.TextField('Описание', blank=True)
+    is_payment_enabled = models.BooleanField(default=False)
+    is_paid = models.BooleanField('Оплачено', default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -127,3 +129,21 @@ class Message(models.Model):
 
     class Meta:
         ordering = ['timestamp']
+
+
+
+from django.db import models
+from django.conf import settings
+
+class Comment(models.Model):
+    hall = models.ForeignKey('Hall', on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']  # ✅ теперь корректно
+
+    def __str__(self):
+        return f"Комментарий от {self.user.username} к залу {self.hall.name}"
+

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Hall, Booking, City
+from .models import Hall, Booking, City, Comment
 
 
 @admin.register(City)
@@ -46,3 +46,6 @@ class BookingAdmin(admin.ModelAdmin):
     list_filter = ('date', 'hall', 'food_option')
     search_fields = ('event_name', 'client__username', 'hall__name')
     readonly_fields = ('created_at',)
+
+
+admin.site.register(Comment)

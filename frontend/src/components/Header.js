@@ -18,7 +18,7 @@ const Header = () => {
     <header className="main-header">
       <div className="header-container">
         <div className="logo">
-          <Link to="/">🏛 VenueFinder</Link>
+          <Link to="/">VenueFinder</Link>
         </div>
 
         <nav className="nav-links">
@@ -31,8 +31,6 @@ const Header = () => {
 
               {role === 'owner' && (
                 <>
-                  <Link to="/halls/add">Добавить зал</Link>
-                  <Link to="/my-halls">Мои залы</Link>
                   <Link to="/halls">Все залы</Link>
                   <Link to="/owner/dashboard">Кабинет</Link>
                 </>

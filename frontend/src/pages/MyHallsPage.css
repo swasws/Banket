@@ -1,25 +1,35 @@
 .my-halls-container {
-  padding: 20px;
+  padding: 30px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.my-halls-container h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #2c3e50;
+  font-weight: bold;
 }
 
 .hall-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 25px;
 }
 
 .hall-card {
-  width: 300px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+  background-color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
 }
 
 .hall-card:hover {
-  transform: scale(1.03);
+  transform: translateY(-4px);
 }
 
 .hall-image {
@@ -29,17 +39,70 @@
 }
 
 .hall-info {
-  padding: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .hall-info h3 {
-  margin-top: 0;
+  font-size: 20px;
+  margin: 0;
+  color: #333;
 }
 
-.hall-link {
-  display: inline-block;
-  margin-top: 10px;
-  color: #007bff;
+.hall-info p {
+  font-size: 14px;
+  color: #555;
+  margin: 2px 0;
+}
+
+.hall-buttons {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hall-link,
+.edit-button,
+.delete-button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
   text-decoration: none;
-  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Кнопка Подробнее */
+.hall-link {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.hall-link:hover {
+  background-color: #0056b3;
+}
+
+/* Кнопка Редактировать */
+.edit-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #1e7e34;
+}
+
+/* Кнопка Удалить */
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #b52b3a;
 }

@@ -34,6 +34,8 @@ import BookHallPage from './pages/BookHallPage';
 import ClientDashboard from './pages/ClientDashboard';
 import EditBookingPage from './pages/EditBookingPage';
 
+import PaymentPage from './pages/PaymentPage';
+
 
 function App() {
   return (
@@ -75,6 +77,8 @@ function App() {
 
         <Route path="/chat/:bookingId" element={<Chat />} />
         <Route path="/chat" element={<Chat />} />
+
+        <Route path="/payment/:bookingId" element={<PaymentPage />} />
 
 
       </Routes>

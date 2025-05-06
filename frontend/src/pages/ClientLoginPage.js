@@ -19,10 +19,11 @@ const ClientLoginPage = () => {
         username,
         password
       });
-      const { token, role } = response.data;
+      const { token, role, user_id } = response.data;
 
       localStorage.setItem('authToken', token);
       localStorage.setItem('userRole', role);
+      localStorage.setItem('userId', user_id);
       navigate('/');
     } catch (err) {
       console.error(err);

@@ -1,84 +1,319 @@
-.hall-detail-container {
-  max-width: 900px;
-  margin: 50px auto;
-  background: linear-gradient(145deg, #f4f8fb, #ffffff);
-  border-radius: 20px;
-  padding: 30px 40px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+.detail-wrapper {
+  max-width: 960px;
+  margin: 60px auto;
+  padding: 40px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
   font-family: 'Segoe UI', sans-serif;
-  animation: fadeIn 0.6s ease-in-out;
 }
 
-.hall-header {
+.detail-title {
+  font-size: 2.5rem;
   text-align: center;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.detail-id {
+  text-align: center;
+  font-size: 1rem;
+  color: #777;
   margin-bottom: 30px;
 }
 
-.hall-header h2 {
-  font-size: 2.2rem;
-  color: #2c3e50;
+/* Фото */
+.detail-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f2f2f2;
+  border-radius: 16px;
+  padding: 10px;
+  margin-bottom: 30px;
 }
 
-.hall-subtitle {
-  color: #888;
-  font-size: 0.95rem;
-  margin-top: 4px;
-}
-
-.hall-image-block {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.hall-image {
+.detail-image {
   max-width: 100%;
+  max-height: 400px;
+  width: auto;
   height: auto;
   border-radius: 12px;
-  border: 4px solid #dde8f1;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+  object-fit: contain;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-.hall-info-grid {
+/* Сетка данных */
+.detail-info {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px 30px;
-  padding: 10px 0;
-  font-size: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  font-size: 1.05rem;
   color: #333;
+  margin-bottom: 40px;
 }
 
-.hall-action {
+.detail-info div {
+  background: #f9f9f9;
+  padding: 16px 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: 0.2s ease;
+}
+
+.detail-info div:hover {
+  background: #eef3f7;
+  transform: translateY(-2px);
+}
+
+/* Кнопка */
+.detail-button-wrapper {
   text-align: center;
-  margin-top: 30px;
 }
-
-.hall-book-btn {
-  background-color: #00aaff;
+.detail-book-button {
+  background-color: #149cd9;
   color: white;
   font-weight: bold;
   padding: 14px 32px;
+  font-size: 1.1rem;
   border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(20, 156, 217, 0.25);
+}
+.detail-book-button:hover {
+  background-color: #117ab8;
+  transform: scale(1.03);
+}
+
+/* Загрузка и ошибки */
+.detail-loading,
+.detail-error,
+.detail-empty {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #d62828;
+  margin-top: 50px;
+}
+
+
+/* 🔽 Блок комментариев */
+.comment-section {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 2px dashed #ddd;
+}
+
+.comment-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #222;
+  text-align: center;
+}
+
+/* 🔽 Форма */
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.comment-textarea {
+  width: 100%;
+  padding: 14px 18px;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #fefefe;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  resize: vertical;
+  transition: 0.3s ease;
+}
+
+.comment-textarea:focus {
+  border-color: #149cd9;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(20, 156, 217, 0.2);
+}
+
+.comment-submit {
+  align-self: flex-end;
+  background-color: #149cd9;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 26px;
+  border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.3s ease;
-  box-shadow: 0 6px 15px rgba(0, 170, 255, 0.2);
 }
 
-.hall-book-btn:hover {
-  background-color: #007ecc;
+.comment-submit:hover {
+  background-color: #117ab8;
 }
 
-.hall-loading,
-.hall-error,
-.hall-empty {
-  text-align: center;
-  font-size: 1.2rem;
-  margin-top: 40px;
-  color: #cc0000;
+/* 🔽 Список комментариев */
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(40px); }
-  100% { opacity: 1; transform: translateY(0); }
+/* 🔽 Один комментарий */
+.comment-card {
+  background-color: #f9f9f9;
+  padding: 16px 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease;
 }
+
+.comment-card:hover {
+  background-color: #eef3f7;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.comment-header strong {
+  color: #222;
+}
+
+.comment-card p {
+  font-size: 1.05rem;
+  color: #333;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Кнопка удаления комментария */
+.comment-delete {
+  margin-top: 10px;
+  background-color: #ff4d4f;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.comment-delete:hover {
+  background-color: #d9363e;
+}
+
+/* Выпадающее меню с кнопкой ⋮ */
+.comment-actions {
+  position: relative;
+  margin-left: 10px;
+}
+
+.dots-button {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #777;
+  padding: 0 5px;
+  transition: color 0.2s ease;
+}
+
+.dots-button:hover {
+  color: #222;
+}
+
+/* Выпадающее меню */
+.comment-dropdown {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  min-width: 130px;
+  z-index: 10;
+  animation: fadeInDropdown 0.25s ease-out;
+  overflow: hidden;
+}
+
+.comment-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.comment-dropdown button:hover {
+  background-color: #f2f2f2;
+}
+
+/* Анимация появления меню */
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Редактирование комментария */
+.edit-form {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-form textarea {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  resize: vertical;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.edit-form textarea:focus {
+  border-color: #149cd9;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(20, 156, 217, 0.2);
+}
+
+.edit-form button {
+  align-self: flex-start;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.edit-form button:hover {
+  background-color: #218838;
+}
+

@@ -1,10 +1,13 @@
-// src/pages/ListHallsPage.js
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import './ListHallsPage.css'; // Подключаем стили
+import './ListHallsPage.css';
 
 function ListHallsPage() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialCityName = queryParams.get('cityName');
+
   const [halls, setHalls] = useState([]);
   const [cities, setCities] = useState([]);
   const [error, setError] = useState('');
@@ -27,15 +30,33 @@ function ListHallsPage() {
             headers: { Authorization: `Token ${token}` }
           })
         ]);
-        setHalls(hallRes.data);
+
+        // Сортировка по дате создания
+        const sortedHalls = hallRes.data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+
+        setHalls(sortedHalls);
         setCities(cityRes.data);
+
+        // Применяем фильтр по названию города (если передан в URL)
+        if (initialCityName) {
+          const foundCity = cityRes.data.find(
+            city => city.name.toLowerCase() === initialCityName.toLowerCase()
+          );
+          if (foundCity) {
+            setSelectedCity(foundCity.id.toString());
+          }
+        }
+
       } catch (err) {
         console.error(err);
         setError('Ошибка при загрузке данных.');
       }
     };
+
     fetchData();
-  }, []);
+  }, [initialCityName]);
 
   const filteredHalls = halls.filter(hall => {
     const matchesSearch = hall.name.toLowerCase().includes(search.toLowerCase());
@@ -43,7 +64,7 @@ function ListHallsPage() {
     const matchesCapacityMin = capacityMin ? hall.capacity_max >= parseInt(capacityMin) : true;
     const matchesCapacityMax = capacityMax ? hall.capacity_min <= parseInt(capacityMax) : true;
     const matchesTags = tagFilter
-      ? hall.tags.toLowerCase().includes(tagFilter.toLowerCase())
+      ? hall.tags?.toLowerCase().includes(tagFilter.toLowerCase())
       : true;
 
     return matchesSearch && matchesCity && matchesCapacityMin && matchesCapacityMax && matchesTags;
@@ -54,16 +75,36 @@ function ListHallsPage() {
       <h2>Список Залов</h2>
 
       <div className="filters">
-        <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="🔍 Поиск по названию" />
+        <input
+          type="text"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Поиск по названию"
+        />
         <select value={selectedCity} onChange={e => setSelectedCity(e.target.value)}>
-          <option value="">🏙 Все города</option>
+          <option value="">Все города</option>
           {cities.map(city => (
             <option key={city.id} value={city.id}>{city.name}</option>
           ))}
         </select>
-        <input type="number" value={capacityMin} onChange={e => setCapacityMin(e.target.value)} placeholder="👥 От" />
-        <input type="number" value={capacityMax} onChange={e => setCapacityMax(e.target.value)} placeholder="До" />
-        <input type="text" value={tagFilter} onChange={e => setTagFilter(e.target.value)} placeholder="🏷 Теги (банкет, ...)" />
+        <input
+          type="number"
+          value={capacityMin}
+          onChange={e => setCapacityMin(e.target.value)}
+          placeholder="От"
+        />
+        <input
+          type="number"
+          value={capacityMax}
+          onChange={e => setCapacityMax(e.target.value)}
+          placeholder="До"
+        />
+        <input
+          type="text"
+          value={tagFilter}
+          onChange={e => setTagFilter(e.target.value)}
+          placeholder="Теги (банкет, ...)"
+        />
       </div>
 
       {error && <p className="error">{error}</p>}

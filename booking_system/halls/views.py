@@ -1,14 +1,17 @@
 # halls/views.py
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny
-from .models import Hall, Notification
-from .serializers import HallSerializer, NotificationSerializer
+from .serializers import HallSerializer
 from .permissions import IsOwnerOrReadOnly
 from .models import City
 from .serializers import CitySerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
+from .models import Booking, Hall, Notification
+from .serializers import BookingSerializer, NotificationSerializer
+from rest_framework import viewsets, permissions
+from .models import Message
+from .serializers import MessageSerializer
 
 
 class HallViewSet(ModelViewSet):
@@ -28,16 +31,6 @@ class CityViewSet(ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
 
-
-
-# halls/views.py
-
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet
-from .models import Booking, Hall, Notification
-from .serializers import BookingSerializer, NotificationSerializer
 
 class BookingViewSet(ModelViewSet):
     queryset = Booking.objects.all()
@@ -110,6 +103,39 @@ class BookingViewSet(ModelViewSet):
         serializer = self.get_serializer(bookings, many=True)
         return Response(serializer.data)
 
+    @action(detail=True, methods=['post'], url_path='enable-payment')
+    def enable_payment(self, request, pk=None):
+        booking = self.get_object()
+        if booking.hall.owner != request.user:
+            return Response({'error': 'Нет доступа'}, status=403)
+
+        booking.is_payment_enabled = True
+        booking.save()
+        Notification.objects.create(
+            recipient=booking.client,
+            message=f"Владелец зала разрешил оплату бронирования '{booking.event_name}'."
+        )
+        return Response({'message': 'Оплата разрешена'})
+
+    @action(detail=True, methods=['post'], url_path='pay')
+    def pay(self, request, pk=None):
+        booking = self.get_object()
+        if booking.client != request.user:
+            return Response({'error': 'Нет доступа'}, status=403)
+
+        if not booking.is_payment_enabled:
+            return Response({'error': 'Оплата не разрешена'}, status=400)
+
+        booking.is_paid = True
+        booking.save()
+
+        Notification.objects.create(
+            recipient=booking.hall.owner,
+            message=f"Клиент {booking.client.username} оплатил бронирование '{booking.event_name}'."
+        )
+
+        return Response({'message': 'Оплата прошла успешно'})
+
 
 class NotificationViewSet(ModelViewSet):
     queryset = Notification.objects.all()
@@ -119,11 +145,6 @@ class NotificationViewSet(ModelViewSet):
     def get_queryset(self):
         return Notification.objects.filter(recipient=self.request.user).order_by('-created_at')
 
-
-# views.py
-from rest_framework import viewsets, permissions
-from .models import Message
-from .serializers import MessageSerializer
 
 class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
@@ -135,3 +156,40 @@ class MessageViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(sender=self.request.user)
+
+
+from rest_framework import viewsets, permissions
+from .models import Comment
+from .serializers import CommentSerializer
+
+class IsAuthorOrHallOwner(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.user == request.user or obj.hall.owner == request.user
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticated, IsAuthorOrHallOwner]
+
+    def get_queryset(self):
+        hall_id = self.request.query_params.get('hall')
+        if hall_id:
+            return Comment.objects.filter(hall_id=hall_id).order_by('-created_at')
+        return Comment.objects.all()
+
+    def perform_create(self, serializer):
+        hall_id = self.request.data.get('hall')
+        serializer.save(user=self.request.user, hall_id=hall_id)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        # 👇 вот это обязательно!
+        self.check_object_permissions(request, instance)
+
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+

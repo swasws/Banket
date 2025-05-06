@@ -124,3 +124,24 @@
 .chat-link:hover {
   background: #cbe3ff;
 }
+
+
+.btn-enable-pay {
+  background-color: #f39c12;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.pay-button {
+  background-color: #27ae60;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+}

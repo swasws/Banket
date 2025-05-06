@@ -1,8 +1,7 @@
-// src/pages/MyHallsPage.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './MyHallsPage.css'; // ✅ Подключение стилей
+import './MyHallsPage.css';
 
 function MyHallsPage() {
   const [halls, setHalls] = useState([]);
@@ -16,7 +15,11 @@ function MyHallsPage() {
         const response = await axios.get('http://127.0.0.1:8000/api/halls/', {
           headers: { Authorization: `Token ${token}` }
         });
-        const filtered = response.data.filter(h => h.owner === currentUserId);
+
+        const filtered = response.data
+          .filter(h => h.owner === currentUserId)
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Сортировка: новые в начале
+
         setHalls(filtered);
       } catch (err) {
         console.error(err);
@@ -26,6 +29,21 @@ function MyHallsPage() {
 
     fetchMyHalls();
   }, []);
+
+  const handleDelete = async (id) => {
+    const confirm = window.confirm('Удалить зал?');
+    if (!confirm) return;
+
+    try {
+      const token = localStorage.getItem('authToken');
+      await axios.delete(`http://127.0.0.1:8000/api/halls/${id}/`, {
+        headers: { Authorization: `Token ${token}` }
+      });
+      setHalls(prev => prev.filter(h => h.id !== id));
+    } catch (err) {
+      alert('Ошибка при удалении зала.');
+    }
+  };
 
   return (
     <div className="my-halls-container">
@@ -50,7 +68,11 @@ function MyHallsPage() {
                   <h3>{hall.name}</h3>
                   <p><strong>Адрес:</strong> {hall.address || 'Не указан'}</p>
                   <p><strong>Вместимость:</strong> {hall.capacity_min}–{hall.capacity_max}</p>
-                  <Link to={`/halls/${hall.id}`} className="hall-link">Подробнее</Link>
+                  <div className="hall-buttons">
+                    <Link to={`/halls/${hall.id}`} className="hall-link">Подробнее</Link>
+                    <Link to={`/owner/halls/${hall.id}/edit`} className="edit-button">Редактировать</Link>
+                    <button onClick={() => handleDelete(hall.id)} className="delete-button">Удалить</button>
+                  </div>
                 </div>
               </div>
             );

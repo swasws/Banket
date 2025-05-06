@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './Chat.css';
@@ -7,6 +7,27 @@ function Chat() {
   const { bookingId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [bookingInfo, setBookingInfo] = useState(null);
+  const chatRef = useRef(null);
+
+  useEffect(() => {
+    setCurrentUserId(parseInt(localStorage.getItem('userId'), 10));
+
+    const fetchBooking = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        const res = await axios.get(`http://127.0.0.1:8000/api/bookings/${bookingId}/`, {
+          headers: { Authorization: `Token ${token}` }
+        });
+        setBookingInfo(res.data);
+      } catch (err) {
+        console.error('Ошибка при получении информации о бронировании:', err);
+      }
+    };
+
+    fetchBooking();
+  }, [bookingId]);
 
   useEffect(() => {
     if (!bookingId) return;
@@ -14,81 +35,88 @@ function Chat() {
     const fetchMessages = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get(`http://127.0.0.1:8000/api/messages/?booking=${bookingId}`, {
+        const res = await axios.get(`http://127.0.0.1:8000/api/messages/?booking=${bookingId}`, {
           headers: { Authorization: `Token ${token}` }
         });
-        setMessages(response.data);
+        setMessages(res.data);
       } catch (err) {
         console.error('Ошибка при получении сообщений:', err);
       }
     };
 
     fetchMessages();
-    const interval = setInterval(fetchMessages, 5000);
+    const interval = setInterval(fetchMessages, 3000);
     return () => clearInterval(interval);
   }, [bookingId]);
 
-  const handleSend = async () => {
-    if (!bookingId || !newMessage.trim()) {
-      console.warn('bookingId или сообщение отсутствует');
-      return;
+  // Умный автоскролл только если близко к низу
+  useEffect(() => {
+    const el = chatRef.current;
+    if (!el) return;
+
+    const isNearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 150;
+
+    if (isNearBottom) {
+      el.scrollTop = el.scrollHeight;
     }
+  }, [messages]);
+
+  const handleSend = async () => {
+    if (!newMessage.trim()) return;
 
     try {
       const token = localStorage.getItem('authToken');
-      await axios.post(
-        'http://127.0.0.1:8000/api/messages/',
-        {
-          booking: bookingId,
-          text: newMessage
-        },
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-
-      setNewMessage('');
-      // моментально подгружаем новое сообщение
-      const response = await axios.get(`http://127.0.0.1:8000/api/messages/?booking=${bookingId}`, {
+      await axios.post(`http://127.0.0.1:8000/api/messages/`, {
+        booking: bookingId,
+        text: newMessage,
+      }, {
         headers: { Authorization: `Token ${token}` }
       });
-      setMessages(response.data);
-
+      setNewMessage('');
     } catch (err) {
-      console.error('Ошибка при отправке:', err.response?.data || err.message);
+      console.error('Ошибка при отправке сообщения:', err);
     }
   };
 
+  const formatTimestamp = (iso) => {
+    const date = new Date(iso);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ', ' +
+           date.toLocaleDateString([], { day: '2-digit', month: '2-digit' });
+  };
+
   return (
-    <div style={{ maxWidth: '600px', margin: '40px auto' }}>
-      <h2>Чат по бронированию #{bookingId}</h2>
-      <div style={{
-        border: '1px solid #ccc',
-        padding: '20px',
-        minHeight: '300px',
-        marginBottom: '10px',
-        background: '#f8f8f8',
-        borderRadius: '8px'
-      }}>
-        {messages.map(msg => (
-          <div key={msg.id} style={{ marginBottom: '10px' }}>
-            <strong>{msg.sender_username}</strong>: {msg.text}
-          </div>
-        ))}
+    <div className="chat-container">
+      <div className="chat-header">
+        <h2>{bookingInfo ? `Чат зала: ${bookingInfo.hall_name}` : 'Загрузка...'}</h2>
       </div>
-      <textarea
-        value={newMessage}
-        onChange={e => setNewMessage(e.target.value)}
-        placeholder="Введите сообщение..."
-        rows={3}
-        style={{ width: '100%', padding: '10px', borderRadius: '6px' }}
-      />
-      <button onClick={handleSend} style={{ marginTop: '10px', padding: '10px 20px', background: '#007bff', color: '#fff', border: 'none', borderRadius: '6px' }}>
-        Отправить
-      </button>
+
+      <div className="chat-messages" ref={chatRef}>
+        {messages.map(msg => {
+          const senderId = typeof msg.sender === 'object' ? msg.sender.id : msg.sender;
+          const isOwn = senderId === currentUserId;
+          return (
+            <div key={msg.id} className={`chat-bubble ${isOwn ? 'own' : 'other'}`}>
+              <div className="chat-text">{msg.text}</div>
+              <div className="chat-meta">
+                <span className="chat-user">{msg.sender_username}</span>
+                <span className="chat-time">{formatTimestamp(msg.timestamp)}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="chat-input-area">
+        <textarea
+          className="chat-textarea"
+          value={newMessage}
+          onChange={e => setNewMessage(e.target.value)}
+          placeholder="Введите сообщение..."
+          rows={2}
+          autoFocus
+        />
+        <button className="chat-send" onClick={handleSend}>Отправить</button>
+      </div>
     </div>
   );
 }

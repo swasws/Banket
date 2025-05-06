@@ -6,70 +6,186 @@ import './HallDetailPage.css';
 function HallDetailPage() {
   const { id } = useParams();
   const [hall, setHall] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingText, setEditingText] = useState('');
+  const [showDropdownId, setShowDropdownId] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
+  const userId = parseInt(localStorage.getItem('userId'), 10);
+  const token = localStorage.getItem('authToken');
+
   useEffect(() => {
-    const fetchHall = async () => {
+    const fetchData = async () => {
       try {
-        const token = localStorage.getItem('authToken');
-        const response = await axios.get(`http://127.0.0.1:8000/api/halls/${id}/`, {
-          headers: { Authorization: `Token ${token}` }
-        });
-        setHall(response.data);
-      } catch (err) {
-        if (err.response?.status === 403) {
-          setError('У вас нет прав для просмотра этого зала.');
-        } else if (err.response?.status === 404) {
-          setError('Зал не найден.');
-        } else {
-          setError('Ошибка при загрузке зала.');
-        }
+        const [hallRes, commentsRes] = await Promise.all([
+          axios.get(`http://127.0.0.1:8000/api/halls/${id}/`, {
+            headers: { Authorization: `Token ${token}` },
+          }),
+          axios.get(`http://127.0.0.1:8000/api/comments/?hall=${id}`, {
+            headers: { Authorization: `Token ${token}` },
+          }),
+        ]);
+        setHall(hallRes.data);
+        setComments(commentsRes.data);
+      } catch {
+        setError('Ошибка при загрузке данных');
       } finally {
         setLoading(false);
       }
     };
-    fetchHall();
+
+    fetchData();
   }, [id]);
 
-  if (loading) return <p className="hall-loading">Загрузка...</p>;
-  if (error) return <p className="hall-error">{error}</p>;
-  if (!hall) return <p className="hall-empty">Нет данных.</p>;
+  const reloadComments = async () => {
+    try {
+      const res = await axios.get(`http://127.0.0.1:8000/api/comments/?hall=${id}`, {
+        headers: { Authorization: `Token ${token}` },
+      });
+      setComments(res.data);
+    } catch {
+      console.error('Ошибка обновления комментариев');
+    }
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+
+    try {
+      await axios.post(`http://127.0.0.1:8000/api/comments/`, {
+        hall: id,
+        text: newComment,
+      }, {
+        headers: { Authorization: `Token ${token}` },
+      });
+
+      setNewComment('');
+      reloadComments();
+    } catch {
+      alert('Не удалось отправить комментарий');
+    }
+  };
+
+  const handleDelete = async (commentId) => {
+    if (!window.confirm('Удалить комментарий?')) return;
+
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/comments/${commentId}/`, {
+        headers: { Authorization: `Token ${token}` },
+      });
+      setComments(prev => prev.filter(c => c.id !== commentId));
+    } catch {
+      alert('Ошибка при удалении');
+    }
+  };
+
+  const handleEditSubmit = async (commentId) => {
+    try {
+      await axios.put(`http://127.0.0.1:8000/api/comments/${commentId}/`, {
+        text: editingText,
+      }, {
+        headers: { Authorization: `Token ${token}` },
+      });
+      setEditingCommentId(null);
+      setEditingText('');
+      reloadComments();
+    } catch {
+      alert('Ошибка при редактировании');
+    }
+  };
+
+  if (loading) return <p className="detail-loading">Загрузка...</p>;
+  if (error) return <p className="detail-error">{error}</p>;
+  if (!hall) return <p className="detail-empty">Нет данных.</p>;
 
   const imageUrl = hall.image?.startsWith('http')
     ? hall.image
     : `http://127.0.0.1:8000${hall.image}`;
 
   return (
-    <div className="hall-detail-container">
-      <div className="hall-header">
-        <h2>{hall.name}</h2>
-        <p className="hall-subtitle">ID: {hall.id}</p>
-      </div>
+    <div className="detail-wrapper">
+      <h1 className="detail-title">{hall.name}</h1>
 
       {hall.image && (
-        <div className="hall-image-block">
-          <img src={imageUrl} alt={hall.name} className="hall-image" />
+        <div className="detail-image-container">
+          <img src={imageUrl} alt={hall.name} className="detail-image" />
         </div>
       )}
 
-      <div className="hall-info-grid">
-        <div><strong>📄 Описание:</strong> {hall.description || '—'}</div>
-        <div><strong>🏷 Теги:</strong> {hall.tags || '—'}</div>
-        <div><strong>💰 Цена:</strong> {hall.price ? `${hall.price} сом` : '—'}</div>
-        <div><strong>👥 Вместимость:</strong> {hall.capacity_min} – {hall.capacity_max}</div>
-        <div><strong>📍 Адрес:</strong> {hall.address || '—'}</div>
-        <div><strong>🍽 Еда:</strong> {hall.food_option === 'venue' ? 'От заведения' : 'Своя'}</div>
-        <div><strong>🍷 Алкоголь:</strong> {hall.alcohol_option === 'allowed' ? 'Разрешено' : 'Запрещено'}</div>
-        <div><strong>🎉 Мероприятия:</strong> {hall.event_types || '—'}</div>
-        <div><strong>🧑‍🍳 Обслуживание:</strong> {hall.service ? 'Есть' : 'Нет'}</div>
-        <div><strong>⚠️ Правила:</strong> {hall.rules || '—'}</div>
+      <div className="detail-info"> {/* инфа зала */} </div>
+
+      <div className="detail-button-wrapper">
+        <Link to={`/halls/${hall.id}/book`}>
+          <button className="detail-book-button">Забронировать</button>
+        </Link>
       </div>
 
-      <div className="hall-action">
-        <Link to={`/halls/${hall.id}/book`}>
-          <button className="hall-book-btn">Забронировать</button>
-        </Link>
+      <div className="comment-section">
+        <h2>Комментарии</h2>
+        <form onSubmit={handleCommentSubmit} className="comment-form">
+          <textarea
+            className="comment-textarea"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Напишите ваш комментарий..."
+            rows={3}
+          />
+          <button type="submit" className="comment-submit">Отправить</button>
+        </form>
+
+        <div className="comment-list">
+          {comments.map((comment) => {
+            const isAuthor = comment.user === userId;
+            const isOwner = hall.owner === userId;
+            const isEditing = editingCommentId === comment.id;
+
+            return (
+              <div key={comment.id} className="comment-card">
+                <div className="comment-header">
+                  <strong>{comment.user_username}</strong>
+                  <span>{new Date(comment.created_at).toLocaleString()}</span>
+                  {(isAuthor || isOwner) && (
+                    <div className="comment-actions">
+                      <button
+                        className="dots-button"
+                        onClick={() => setShowDropdownId(prev => prev === comment.id ? null : comment.id)}
+                      >⋮</button>
+                      {showDropdownId === comment.id && (
+                        <div className="comment-dropdown">
+                          {isAuthor && (
+                            <button onClick={() => {
+                              setEditingCommentId(comment.id);
+                              setEditingText(comment.text);
+                              setShowDropdownId(null);
+                            }}>Изменить</button>
+                          )}
+                          <button onClick={() => handleDelete(comment.id)}>Удалить</button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {isEditing ? (
+                  <div className="edit-form">
+                    <textarea
+                      value={editingText}
+                      onChange={(e) => setEditingText(e.target.value)}
+                      rows={3}
+                    />
+                    <button onClick={() => handleEditSubmit(comment.id)}>Сохранить</button>
+                  </div>
+                ) : (
+                  <p>{comment.text}</p>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

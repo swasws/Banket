@@ -125,6 +125,7 @@ class ClientLoginView(APIView):
         token, created = Token.objects.get_or_create(user=user)
 
         return Response({
+            "user_id": user.id,
             "token": token.key,
             "role": user.role,
             "username": user.username,
