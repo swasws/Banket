@@ -1,3 +1,4 @@
+// src/pages/HallDetailPage.js
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -108,7 +109,10 @@ function HallDetailPage() {
 
   return (
     <div className="detail-wrapper">
-      <h1 className="detail-title">{hall.name}</h1>
+      <div className="detail-header">
+        <h1 className="detail-title">{hall.name}</h1>
+        <p className="detail-address">{hall.address}</p>
+      </div>
 
       {hall.image && (
         <div className="detail-image-container">
@@ -116,7 +120,42 @@ function HallDetailPage() {
         </div>
       )}
 
-      <div className="detail-info"> {/* инфа зала */} </div>
+      <div className="detail-section">
+        <h2>Описание</h2>
+        <p>{hall.description || '—'}</p>
+      </div>
+
+      <div className="detail-section">
+        <h2>Основные характеристики</h2>
+        <div className="features-grid">
+          <div className="feature-card">
+            <strong>Цена</strong>
+            <p>{hall.price ? `${hall.price} сом` : '—'}</p>
+          </div>
+          <div className="feature-card">
+            <strong>Алкоголь</strong>
+            <p>{hall.alcohol_option === 'allowed' ? 'Разрешено' : 'Запрещено'}</p>
+          </div>
+          <div className="feature-card">
+            <strong>Вместимость</strong>
+            <p>{hall.capacity_min} – {hall.capacity_max}</p>
+          </div>
+          <div className="feature-card">
+            <strong>Еда</strong>
+            <p>{hall.food_option === 'venue' ? 'От заведения' : 'Своя'}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="detail-section">
+        <h2>Дополнительные сведения</h2>
+        <ul className="detail-extra-list">
+          <li><strong>Теги:</strong> {hall.tags || '—'}</li>
+          <li><strong>Мероприятия:</strong> {hall.event_types || '—'}</li>
+          <li><strong>Обслуживание:</strong> {hall.service ? 'Есть' : 'Нет'}</li>
+          <li><strong>Правила:</strong> {hall.rules || '—'}</li>
+        </ul>
+      </div>
 
       <div className="detail-button-wrapper">
         <Link to={`/halls/${hall.id}/book`}>
@@ -125,7 +164,7 @@ function HallDetailPage() {
       </div>
 
       <div className="comment-section">
-        <h2>Комментарии</h2>
+        <h2>Отзывы клиентов</h2>
         <form onSubmit={handleCommentSubmit} className="comment-form">
           <textarea
             className="comment-textarea"

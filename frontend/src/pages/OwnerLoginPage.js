@@ -1,4 +1,3 @@
-// src/pages/OwnerLoginPage.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +11,6 @@ const OwnerLoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
 
-  const toggleShowPassword = () => setShowPassword(prev => !prev);
-
   const handleOwnerLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -22,53 +19,51 @@ const OwnerLoginPage = () => {
         username,
         password
       });
-      const { token, role } = response.data;
-      localStorage.setItem('userId', response.data.user_id);
+      const { token, role, user_id } = response.data;
+
       localStorage.setItem('authToken', token);
       localStorage.setItem('userRole', role);
+      localStorage.setItem('userId', user_id);
       navigate('/owner/dashboard');
     } catch (err) {
-      if (err.response && err.response.data) {
-        setError(JSON.stringify(err.response.data));
-      } else {
-        setError('Ошибка при авторизации владельца');
-      }
+      setError(err.response?.data ? JSON.stringify(err.response.data) : 'Ошибка при авторизации владельца');
     }
   };
 
   return (
-    <div className="owner-login-container">
-      <h2 className="login-title">Вход для Владельца</h2>
-      <form onSubmit={handleOwnerLogin} className="login-form">
-        <div className="form-group">
-          <label>Имя пользователя</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+    <div className="owner-login-wrapper">
+      <div className="owner-login-illustration">
+        <div className="owner-login-text">
+          <h1>С возвращением!</h1>
         </div>
-
-        <div className="form-group password-group">
-          <label>Пароль</label>
-          <div className="password-wrapper">
+      </div>
+      <div className="owner-login-form-side">
+        <div className="owner-login-container">
+          <h2 className="owner-login-title">Вход для владельца</h2>
+          <form className="owner-login-form" onSubmit={handleOwnerLogin}>
+            <label>Имя пользователя</label>
             <input
-              type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
-            <span className="toggle-password" onClick={toggleShowPassword}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
+            <label>Пароль</label>
+            <div className="owner-password-wrapper">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+            <button type="submit" className="owner-login-button">Войти</button>
+          </form>
+          {error && <p className="owner-login-error">{error}</p>}
         </div>
-
-        <button type="submit" className="login-button">Войти</button>
-
-        {error && <p className="error-message">{error}</p>}
-      </form>
+      </div>
     </div>
   );
 };

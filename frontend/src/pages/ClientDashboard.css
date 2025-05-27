@@ -2,7 +2,7 @@
   max-width: 900px;
   margin: 40px auto;
   padding: 30px;
-  background: #fefefe;
+  background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
   font-family: 'Segoe UI', sans-serif;
@@ -12,7 +12,7 @@
   font-size: 28px;
   text-align: center;
   margin-bottom: 30px;
-  color: #333;
+  color: #111;
 }
 
 .client-dashboard-section {
@@ -22,73 +22,47 @@
 .client-dashboard-section h3 {
   font-size: 20px;
   margin-bottom: 20px;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #f43f5e;
   padding-bottom: 8px;
-  color: #007bff;
+  color: #f43f5e;
 }
 
-.client-dashboard-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.client-dashboard-list li {
-  background: #f8f9fb;
-  border-left: 4px solid #007bff;
+.client-dashboard-list-item {
+  background: #fdf2f8;
+  border-left: 4px solid #f43f5e;
   margin-bottom: 15px;
-  padding: 15px 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  font-size: 16px;
 }
 
-.client-dashboard-list strong {
-  font-weight: 600;
-  color: #222;
-}
-
-.client-dashboard-link {
-  display: inline-block;
-  margin-top: 8px;
-  color: #007bff;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.client-dashboard-link:hover {
-  text-decoration: underline;
+.event-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .client-dashboard-status {
   font-weight: bold;
+  font-size: 0.95rem;
 }
 
 .client-dashboard-status.approved {
-  color: #28a745;
+  color: #22c55e;
 }
 
 .client-dashboard-status.rejected {
-  color: #dc3545;
+  color: #ef4444;
 }
 
 .client-dashboard-status.pending {
-  color: #ffc107;
+  color: #f59e0b;
 }
 
 .client-dashboard-empty {
   font-style: italic;
-  color: #777;
-}
-
-
-.client-dashboard-list-item {
-  background: #f8f9fb;
-  border-left: 4px solid #007bff;
-  margin-bottom: 15px;
-  padding: 15px 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-  font-size: 16px;
+  color: #888;
 }
 
 .client-dashboard-grid {
@@ -103,31 +77,42 @@
   gap: 15px;
 }
 
-.event-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .chat-link {
   margin-top: 10px;
   display: inline-block;
   font-weight: 500;
-  color: #007bff;
-  border: 1px solid #007bff;
+  color: #f43f5e;
+  border: 1px solid #f43f5e;
   padding: 6px 12px;
   border-radius: 6px;
-  background: #e6f1ff;
+  background: #ffe6e6;
   text-decoration: none;
+  transition: 0.3s ease;
 }
 
 .chat-link:hover {
-  background: #cbe3ff;
+  background: #ffc9d1;
+  color: #d92048;
 }
 
+.payment-link {
+  margin-top: 10px;
+  display: inline-block;
+  font-weight: 500;
+  color: white;
+  background: #22c55e;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.payment-link:hover {
+  background: #16a34a;
+}
 
 .btn-enable-pay {
-  background-color: #f39c12;
+  background-color: #f59e0b;
   color: white;
   padding: 6px 12px;
   border-radius: 6px;
@@ -136,12 +121,6 @@
   cursor: pointer;
 }
 
-.pay-button {
-  background-color: #27ae60;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 6px;
-  display: inline-block;
-  margin-top: 10px;
-  text-decoration: none;
+.btn-enable-pay:hover {
+  background-color: #d97706;
 }

@@ -39,47 +39,47 @@ const OwnerRegisterPage = () => {
   };
 
   return (
-    <div className="auth-container">
-      <h2 className="auth-title">Регистрация Владельца</h2>
-      <form className="auth-form" onSubmit={handleOwnerRegister}>
-        <label>Имя</label>
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-
-        <label>Почта</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <label>Имя заведения</label>
-        <input
-          value={organizationName}
-          onChange={(e) => setOrganizationName(e.target.value)}
-        />
-
-        <label>Пароль</label>
-        <div className="password-wrapper-regis">
-          <input
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <span onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
+    <div className="auth-wrapper">
+      <div className="auth-illustration">
+        <div className="auth-illustration-text">
+          <h1>Новый способ сдавать залы</h1>
+          <p>Создайте аккаунт и начните получать бронирования</p>
         </div>
+      </div>
 
-        <button className="button-go" type="submit">Зарегистрироваться</button>
-      </form>
+      <div className="auth-form-side">
+        <div className="auth-container">
+          <h2 className="auth-title">Регистрация Владельца</h2>
+          <form className="auth-form" onSubmit={handleOwnerRegister}>
+            <label>Имя</label>
+            <input value={username} onChange={(e) => setUsername(e.target.value)} required />
 
-      {message && <p className="auth-success">{message}</p>}
-      {error && <p className="auth-error">{error}</p>}
+            <label>Почта</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+
+            <label>Имя заведения</label>
+            <input value={organizationName} onChange={(e) => setOrganizationName(e.target.value)} />
+
+            <label>Пароль</label>
+            <div className="password-wrapper-regis">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+
+            <button className="button-go" type="submit">Зарегистрироваться</button>
+          </form>
+
+          {message && <p className="auth-success">{message}</p>}
+          {error && <p className="auth-error">{error}</p>}
+        </div>
+      </div>
     </div>
   );
 };

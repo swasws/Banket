@@ -1,29 +1,32 @@
-/* src/components/Footer.css */
 .main-footer {
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  color: #ffffff;
-  padding: 30px 40px 20px;
-  margin-top: 40px;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4);
+  background-color: #f9fafb;
+  padding: 40px 30px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #374151;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 60px;
 }
 
 .footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding-bottom: 20px;
 }
 
 .footer-left h3 {
-  margin: 0;
-  color: #00e1ff;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111827;
 }
 
 .footer-left p {
-  font-size: 0.9rem;
-  color: #cfdde0;
+  font-size: 0.95rem;
+  color: #6b7280;
+  max-width: 400px;
 }
 
 .footer-right ul {
@@ -37,19 +40,43 @@
 }
 
 .footer-right a {
-  color: #b0eaff;
+  color: #374151;
+  font-size: 0.95rem;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
 }
 
 .footer-right a:hover {
-  color: #ffffff;
-  text-shadow: 0 0 8px #0ff;
+  color: #f43f5e;
 }
 
 .footer-bottom {
   text-align: center;
-  padding-top: 15px;
+  padding-top: 16px;
   font-size: 0.85rem;
-  color: #c9d4da;
+  color: #6b7280;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-left,
+  .footer-right {
+    width: 100%;
+  }
+
+  .footer-right ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-right li {
+    margin: 0;
+  }
 }

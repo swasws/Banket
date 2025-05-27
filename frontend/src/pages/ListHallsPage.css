@@ -87,12 +87,12 @@
 
 .hall-info h3 a {
   text-decoration: none;
-  color: #149cd9;
+  color: #000000;
   transition: color 0.2s ease;
 }
 
 .hall-info h3 a:hover {
-  color: #0d7abf;
+  color: #474747;
 }
 
 .hall-info p {

@@ -122,10 +122,15 @@ WSGI_APPLICATION = 'booking_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'booking_db',  # Имя твоей БД
+        'USER': 'postgres',    # Твой PostgreSQL пользователь
+        'PASSWORD': '20020810',  # Пароль от pgAdmin/Postgres
+        'HOST': 'localhost',
+        'PORT': '5433',  # Стандартный порт PostgreSQL
     }
 }
+
 
 
 # Password validation
