@@ -5,7 +5,7 @@ from .models import City
 from .serializers import CitySerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import ModelViewSet
 from .models import Booking, Hall, Notification
 from .serializers import BookingSerializer, NotificationSerializer
@@ -15,9 +15,9 @@ from .serializers import MessageSerializer
 
 
 class HallViewSet(ModelViewSet):
-    queryset = Hall.objects.all()
+    queryset = Hall.objects.all().select_related('city')
     serializer_class = HallSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [AllowAny]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

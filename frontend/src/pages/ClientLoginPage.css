@@ -1,86 +1,127 @@
-.login-container {
-  max-width: 420px;
-  margin: 80px auto;
-  background: #f7f9fc;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+
+.login-wrapper-modern {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #e1bee7);
+  padding: 30px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  overflow: hidden;
 }
 
-.login-title {
+.login-illustration-modern {
+  flex: 1;
+  background: url('/public/images/login.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: white;
   text-align: center;
-  margin-bottom: 30px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.login-illustration-text {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.login-illustration-text h1 {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.login-form-side-modern {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+}
+
+.login-container-modern {
+  max-width: 400px;
+  width: 100%;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+
+
+.login-title-modern {
+  text-align: center;
   font-size: 26px;
+  margin-bottom: 30px;
   color: #333;
 }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
 
-.form-group label {
-  font-weight: bold;
-  margin-bottom: 5px;
+.login-form-modern label {
+  font-weight: 600;
+  color: #333;
   display: block;
+  margin-bottom: 6px;
 }
 
-.form-group input,
-.form-input {
-  width: 100%;
-  padding: 10px 14px;
-  padding-right: 40px; /* ← место под глазик */
+.login-form-modern input {
+  width: 93%;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  border-radius: 8px;
   font-size: 1rem;
-  box-sizing: border-box; /* обязательно */
+  transition: border-color 0.3s ease;
 }
 
+.login-form-modern input:focus {
+  border-color: #f59e0b;
+  outline: none;
+}
 
-.password-group {
+.password-wrapper-modern {
   position: relative;
+  width: 93%;
 }
 
-.password-wrapper {
-  position: relative;
-  width: 100%;
+.password-wrapper-modern input {
+  padding-right: 40px;
 }
 
-
-.toggle-password {
+.password-wrapper-modern span {
   position: absolute;
-  top: 50%;
-  right: 12px;
+  right: -12px;
+  top: 40%;
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 1.2rem;
   color: #555;
-  transition: color 0.2s ease;
 }
 
-.toggle-password:hover {
-  color: #000;
-}
-
-.login-btn {
+.login-button-modern {
   width: 100%;
-  padding: 12px;
-  background: #007bff;
-  border: none;
+  background: #f43f5e;
   color: white;
-  font-size: 16px;
-  border-radius: 8px;
+  padding: 14px;
+  border: none;
+  font-size: 1.05rem;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background 0.3s ease;
 }
 
-.login-btn:hover {
-  background: #3578c5;
+.login-button-modern:hover {
+  background: #e11d48;
 }
 
-.login-error {
+.login-error-modern {
   color: red;
-  margin-top: 15px;
+  font-size: 0.95rem;
+  margin-top: 14px;
   text-align: center;
 }

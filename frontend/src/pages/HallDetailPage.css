@@ -1,118 +1,125 @@
+/* Общая обёртка */
 .detail-wrapper {
-  max-width: 960px;
+  max-width: 1140px;
   margin: 60px auto;
-  padding: 40px;
-  border-radius: 24px;
-  background: #ffffff;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+  padding: 30px;
   font-family: 'Segoe UI', sans-serif;
+  color: #111;
+  background: #fff;
+}
+
+/* Заголовок и адрес */
+.detail-header {
+  margin-bottom: 24px;
 }
 
 .detail-title {
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 5px;
-  color: #222;
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #111;
 }
 
-.detail-id {
-  text-align: center;
-  font-size: 1rem;
+.detail-address {
+  font-size: 1.1rem;
   color: #777;
-  margin-bottom: 30px;
 }
 
 /* Фото */
 .detail-image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f2f2f2;
-  border-radius: 16px;
-  padding: 10px;
-  margin-bottom: 30px;
+  width: 100%;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
 .detail-image {
-  max-width: 100%;
-  max-height: 400px;
-  width: auto;
-  height: auto;
-  border-radius: 12px;
-  object-fit: contain;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
 }
 
-/* Сетка данных */
+/* Основные секции */
 .detail-info {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.detail-section {
+  flex: 1 1 48%;
+}
+
+.detail-section h2 {
+  font-size: 1.6rem;
+  color: #f43f5e;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #f43f5e;
+  padding-bottom: 6px;
+}
+
+.detail-section p {
   font-size: 1.05rem;
+  line-height: 1.7;
   color: #333;
-  margin-bottom: 40px;
 }
 
-.detail-info div {
-  background: #f9f9f9;
-  padding: 16px 20px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  transition: 0.2s ease;
+.detail-section ul {
+  padding-left: 0;
+  list-style: none;
 }
 
-.detail-info div:hover {
-  background: #eef3f7;
-  transform: translateY(-2px);
+.detail-section li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #444;
+}
+
+.detail-section li strong {
+  color: #111;
 }
 
 /* Кнопка */
 .detail-button-wrapper {
   text-align: center;
+  margin-top: 30px;
 }
+
 .detail-book-button {
-  background-color: #149cd9;
+  background: #f43f5e;
   color: white;
-  font-weight: bold;
-  padding: 14px 32px;
+  padding: 16px 36px;
   font-size: 1.1rem;
+  font-weight: 600;
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 24px rgba(20, 156, 217, 0.25);
+  box-shadow: 0 10px 30px rgba(244, 63, 94, 0.3);
+  transition: transform 0.3s ease, background 0.3s ease;
 }
+
 .detail-book-button:hover {
-  background-color: #117ab8;
-  transform: scale(1.03);
+  background-color: #e11d48;
+  transform: scale(1.05);
 }
 
-/* Загрузка и ошибки */
-.detail-loading,
-.detail-error,
-.detail-empty {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #d62828;
-  margin-top: 50px;
-}
-
-
-/* 🔽 Блок комментариев */
+/* Комментарии */
 .comment-section {
-  margin-top: 60px;
+  margin-top: 70px;
+  border-top: 2px dashed #ccc;
   padding-top: 40px;
-  border-top: 2px dashed #ddd;
 }
 
 .comment-section h2 {
   font-size: 1.8rem;
   margin-bottom: 20px;
-  color: #222;
+  color: #111;
   text-align: center;
 }
 
-/* 🔽 Форма */
+/* Форма */
 .comment-form {
   display: flex;
   flex-direction: column;
@@ -126,21 +133,20 @@
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 12px;
-  background-color: #fefefe;
+  background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   resize: vertical;
-  transition: 0.3s ease;
 }
 
 .comment-textarea:focus {
-  border-color: #149cd9;
+  border-color: #f43f5e;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(20, 156, 217, 0.2);
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.15);
 }
 
 .comment-submit {
   align-self: flex-end;
-  background-color: #149cd9;
+  background-color: #f43f5e;
   color: white;
   font-weight: 600;
   font-size: 1rem;
@@ -152,27 +158,27 @@
 }
 
 .comment-submit:hover {
-  background-color: #117ab8;
+  background-color: #e11d48;
 }
 
-/* 🔽 Список комментариев */
+/* Список комментариев */
 .comment-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* 🔽 Один комментарий */
+/* Один комментарий */
 .comment-card {
   background-color: #f9f9f9;
   padding: 16px 20px;
   border-radius: 14px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-  transition: 0.2s ease;
+  position: relative;
 }
 
 .comment-card:hover {
-  background-color: #eef3f7;
+  background-color: #f4f4f4;
 }
 
 .comment-header {
@@ -194,28 +200,9 @@
   margin: 0;
 }
 
-/* Кнопка удаления комментария */
-.comment-delete {
-  margin-top: 10px;
-  background-color: #ff4d4f;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.comment-delete:hover {
-  background-color: #d9363e;
-}
-
-/* Выпадающее меню с кнопкой ⋮ */
+/* Dropdown */
 .comment-actions {
   position: relative;
-  margin-left: 10px;
 }
 
 .dots-button {
@@ -223,32 +210,31 @@
   border: none;
   font-size: 1.4rem;
   cursor: pointer;
-  color: #777;
-  padding: 0 5px;
-  transition: color 0.2s ease;
+  color: #888;
+  padding: 0;
 }
 
 .dots-button:hover {
-  color: #222;
+  color: #f43f5e;
 }
 
-/* Выпадающее меню */
 .comment-dropdown {
   position: absolute;
   right: 0;
   top: 120%;
   background-color: #ffffff;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  min-width: 130px;
+  min-width: 140px;
   z-index: 10;
-  animation: fadeInDropdown 0.25s ease-out;
-  overflow: hidden;
+}
+
+.comment-dropdown:hover {
+  background-color: #f8f8f8;
 }
 
 .comment-dropdown button {
-  display: block;
   width: 100%;
   padding: 10px 15px;
   background: none;
@@ -257,26 +243,13 @@
   font-size: 0.95rem;
   color: #333;
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
 .comment-dropdown button:hover {
-  background-color: #f2f2f2;
+  background-color: #f8f8f8;
 }
 
-/* Анимация появления меню */
-@keyframes fadeInDropdown {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Редактирование комментария */
+/* Edit форма */
 .edit-form {
   margin-top: 10px;
   display: flex;
@@ -294,15 +267,9 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-.edit-form textarea:focus {
-  border-color: #149cd9;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(20, 156, 217, 0.2);
-}
-
 .edit-form button {
   align-self: flex-start;
-  background-color: #28a745;
+  background-color: #f43f5e;
   color: white;
   padding: 10px 20px;
   font-size: 0.95rem;
@@ -314,6 +281,70 @@
 }
 
 .edit-form button:hover {
-  background-color: #218838;
+  background-color: #da3551;
 }
 
+/* Адаптив */
+@media (max-width: 768px) {
+  .detail-info {
+    flex-direction: column;
+  }
+
+  .detail-section {
+    flex: 1 1 100%;
+  }
+
+  .detail-image {
+    height: auto;
+    max-height: 340px;
+  }
+}
+
+/* Характеристики в виде карточек */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.feature-card {
+  background-color: #f9fafb;
+  border: 1px solid #e4e4e7;
+  border-left: 4px solid #f43f5e;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.feature-card strong {
+  display: block;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  color: #444;
+  margin: 0;
+}
+
+.detail-extra-list {
+  padding-left: 20px;
+  margin-top: 15px;
+  list-style: disc;
+  color: #444;
+}
+
+.detail-extra-list li {
+  margin-bottom: 15px;
+  font-size: 1rem;
+}

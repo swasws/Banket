@@ -6,17 +6,20 @@ from .models import Hall, City, Notification
 class HallSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
     city = serializers.PrimaryKeyRelatedField(queryset=City.objects.all())
+    city_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Hall
         fields = [
             'id', 'owner', 'name', 'description', 'image', 'tags', 'price',
             'capacity_min', 'capacity_max', 'address', 'food_option', 'alcohol_option',
-            'event_types', 'service', 'rules', 'city',
+            'event_types', 'service', 'rules', 'city', 'city_name',
             'created_at', 'updated_at',
         ]
         read_only_fields = ('owner', 'created_at', 'updated_at')
 
+    def get_city_name(self, obj):
+        return obj.city.name if obj.city else None
 
 class CitySerializer(serializers.ModelSerializer):
     class Meta:

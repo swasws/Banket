@@ -1,19 +1,21 @@
+
 /* src/pages/RoleChoicePage.css */
 .role-choice-container {
   max-width: 900px;
   margin: 60px auto;
   padding: 30px;
   text-align: center;
-  background: #ffffff;
+  background: #fff;
   border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .role-choice-title {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 40px;
-  font-weight: bold;
-  color: #333;
+  font-weight: 700;
+  color: #f43f5e;
 }
 
 .role-cards {
@@ -24,58 +26,63 @@
 }
 
 .role-card {
-  background: linear-gradient(to bottom right, #f1f1f1, #fff);
-  border-radius: 16px;
-  padding: 25px 30px;
-  width: 250px;
+  background: #fff0f3;
+  border: 2px solid #f43f5e33;
+  border-radius: 18px;
+  padding: 30px 32px;
+  width: 260px;
   text-align: center;
   text-decoration: none;
-  color: #333;
+  color: #1f1f1f;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 20px rgba(244, 63, 94, 0.08);
 }
 
 .role-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px);
+  box-shadow: 0 12px 28px rgba(244, 63, 94, 0.2);
 }
 
 .role-card h3 {
   margin-top: 15px;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  color: #f43f5e;
 }
 
 .role-card .icon {
-  font-size: 2.8rem;
+  font-size: 3rem;
 }
 
 .role-card p {
   font-size: 0.95rem;
-  color: #666;
+  color: #444;
+  margin-top: 8px;
 }
 
 .register-links {
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
 .register-links p {
   font-size: 1.1rem;
   margin-bottom: 10px;
   font-weight: 500;
+  color: #333;
 }
 
 .register-btn {
-  margin: 5px 10px;
+  margin: 6px 12px;
   display: inline-block;
-  padding: 10px 20px;
-  border-radius: 25px;
-  background: #007bff;
+  padding: 12px 26px;
+  border-radius: 30px;
+  background: #f43f5e;
   color: white;
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .register-btn:hover {
-  background: #0056b3;
+  background: #e11d48;
+  transform: scale(1.05);
 }

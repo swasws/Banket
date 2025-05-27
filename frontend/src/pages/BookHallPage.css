@@ -58,7 +58,7 @@ textarea {
   padding: 14px;
   font-size: 16px;
   font-weight: bold;
-  background: #007bff;
+  background: #f43f5e;
   border: none;
   color: white;
   border-radius: 10px;
@@ -67,7 +67,7 @@ textarea {
 }
 
 .submit-button:hover {
-  background: #0056b3;
+  background: #e11d48;
 }
 
 .form-error {

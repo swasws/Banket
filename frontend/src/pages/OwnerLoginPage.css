@@ -1,263 +1,120 @@
-/* src/pages/OwnerLoginPage.css */
+.owner-login-wrapper {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #fce4ec, #f3e5f5);
+  padding: 30px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.owner-login-illustration {
+  flex: 1;
+  background: url('/public/images/login.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: white;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.owner-login-text {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.owner-login-text h1 {
+  font-size: 2.5rem;
+}
+
+.owner-login-form-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+}
+
 .owner-login-container {
   max-width: 400px;
-  margin: 80px auto;
-  background: white;
-  padding: 40px 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  padding: 40px;
+}
+
+.owner-login-title {
   text-align: center;
-}
-
-.login-title {
-  font-size: 1.8rem;
+  font-size: 26px;
   margin-bottom: 30px;
-  color: #2c3e50;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form-group {
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
   color: #333;
 }
 
-.form-group input,
-.form-input {
-  width: 100%;
-  padding: 10px 14px;
-  padding-right: 40px; /* ← место под глазик */
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  box-sizing: border-box; /* обязательно */
+.owner-login-form label {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 6px;
 }
 
+.owner-login-form input {
+  width: 93%;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
 
-.form-group input:focus {
-  border-color: #007bff;
+.owner-login-form input:focus {
+  border-color: #8e24aa;
   outline: none;
 }
 
-.login-button {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  font-weight: bold;
-  background: #007bff;
-  border: none;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.login-button:hover {
-  background: #0056b3;
-}
-
-.error-message {
-  margin-top: 15px;
-  color: red;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.password-group {
+.owner-password-wrapper {
   position: relative;
-
+  width: 93%;
 }
 
-.password-wrapper {
-  position: relative;
-  width: 100%;
+.owner-password-wrapper input {
+  padding-right: 40px;
 }
 
-
-.toggle-password {
+.owner-password-wrapper span {
   position: absolute;
-  top: 50%;
-  right: 12px;
+  right: -12px;
+  top: 40%;
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 1.2rem;
   color: #555;
-  transition: color 0.2s ease;
 }
 
-.toggle-password:hover {
-  color: #000;
-}
-
-.dashboard-grid {
-  display: flex;
-  gap: 30px;
-  padding: 40px;
-  background: #f9fbfd;
-}
-
-.left-column, .right-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-
-}
-
-.hall-card, .booking-card {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-}
-
-.hall-links, .booking-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.hall-links a, .booking-actions button, .chat-button {
-  padding: 6px 12px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.chat-button {
-  background: #e9f3ff;
-  color: #007bff;
-  border: 1px solid #007bff;
-  font-weight: 500;
-}
-
-.chat-button:hover {
-  background: #d0e9ff;
-}
-
-.booking-actions button {
-  border: none;
-  font-weight: 700;
-  padding: 10px 15px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-
-}
-
-.booking-actions button:hover {
-  opacity: 0.9;
-}
-
-
-
-.status.approved {
-  color: #28a745;
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.status.rejected {
-  color: #dc3545;
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.status.pending  {
-  color: #daa401;
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-h2, h3, h4 {
-  margin: 0 0 10px;
-  color: #2c3e50;
-}
-
-.btn-approve {
-  background-color: #28a745;
+.owner-login-button {
+  width: 100%;
+  background: #f43f5e;;
   color: white;
+  padding: 14px;
   border: none;
-  padding: 12px 22px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.btn-reject {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-
-.hall-button {
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.hall-button.view {
-  background-color: #0088ff;
-  color: #ffffff;
-  border: none;
-  font-weight: 700;
-  font-size: 1.0rem;
-}
-
-.hall-button.view:hover {
-  background-color: #0063bb;
-}
-
-.hall-button.edit {
-  background-color: #ff9d00;
-  color: #ffffff;
-  border: none;
-  font-weight: 700;
-  font-size: 1.0rem;
-}
-
-.hall-button.edit:hover {
-  background-color: #bd7602;
-}
-
-.hall-button.delete {
-  background-color: #dc3545;
-  color: #ffffff;
-  border: none;
-}
-
-.hall-button.delete:hover {
-  background-color: #c50a0a;
-}
-
-
-.tag-badge {
-  display: inline-block;
-  background: #f0f0f0;
-  color: #333;
-  font-size: 0.8rem;
-  padding: 4px 8px;
+  font-size: 1.05rem;
   border-radius: 10px;
-  margin-right: 5px;
-  margin-top: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.owner-login-button:hover {
+  background: #e11d48;
+}
+
+.owner-login-error {
+  color: red;
+  font-size: 0.95rem;
+  margin-top: 14px;
+  text-align: center;
 }

@@ -47,7 +47,7 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link to="/login">Логин</Link>
+              <Link to="/login">Войти</Link>
               <Link to="/owner/register">Регистрация Владельца</Link>
               <Link to="/client/register">Регистрация Клиента</Link>
             </>

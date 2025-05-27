@@ -59,7 +59,7 @@
 
 .edit-hall-button {
   padding: 14px;
-  background-color: #007bff;
+  background-color: #e11d48;
   color: white;
   font-weight: bold;
   font-size: 16px;
@@ -71,7 +71,7 @@
 }
 
 .edit-hall-button:hover {
-  background-color: #0056b3;
+  background-color: #e11d48;
 }
 
 .edit-hall-error {

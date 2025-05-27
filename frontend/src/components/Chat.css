@@ -4,7 +4,7 @@
   margin: 30px auto;
   padding: 20px;
   border-radius: 30px;
-  background: linear-gradient(to bottom right, #ffe585, #ffc400);
+  background: linear-gradient(to bottom right, #fff0f3, #f87892);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
@@ -108,7 +108,7 @@
 .chat-send::before {
   content: "↑";
   font-size: 20px;
-  color: #ffc400;
+  color: #f43f5e;
   font-weight: bold;
 }
 
